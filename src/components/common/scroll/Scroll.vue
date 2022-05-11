@@ -3,8 +3,7 @@
   <div class="wrapper" ref="wrapper">
     <div class="content">
       <slot></slot>
-      </div>
-    
+    </div>
   </div>
 </template>
 
@@ -18,7 +17,11 @@ data(){
   }
 },
 mounted(){
-  this.scroll = new BScroll(this.$refs.wrapper)
+  this.scroll = new BScroll(this.$refs.wrapper,{
+    probeType:3,
+    click:true,
+    pullUpLoad:true
+  })
 }
 
 }
