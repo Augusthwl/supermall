@@ -1,5 +1,6 @@
 <template>
-<div class="wrapper" ref="aaa">
+<div>
+ <div class="wrapper" ref="aaa">
   <ul>
   <li>分类列表1</li>
   <li>分类列表2</li>
@@ -102,6 +103,7 @@
   <li>分类列表99</li>
   <li>分类列表100</li>
   </ul>
+ </div>
 </div>
 </template>
 
@@ -134,7 +136,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .wrapper{
   height: 200px;
   background-color: red;

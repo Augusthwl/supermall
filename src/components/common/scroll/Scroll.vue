@@ -36,14 +36,19 @@ mounted(){
   })
 
   // 2.监听滚动的位置
-  this.scroll.on('scroll',(position)=>{
-    this.$emit('scroll',position)
-  })
+  if(this.probeType === 2 || this.probeType === 3){
+    this.scroll.on('scroll',(position)=>{
+      this.$emit('scroll',position)
+      this.scroll.refresh()
+    })
+  }
 
-  // 3.监听上拉加载更多
-  this.scroll.on('pullingUp',()=>{
+  // 3.监听滚动到底部
+  if (this.pullUpLoad) {
+    this.scroll.on('pullingUp',()=>{
     this.$emit('pullingup')
-  })
+    })
+  }
   
 },
 methods:{
@@ -52,6 +57,12 @@ methods:{
   },
   finishPullUp(){
     this.scroll.finishPullUp()
+  },
+  refresh(){
+    this.scroll && this.scroll.refresh()
+  },
+  getScrollY(){
+    return this.scroll ? this.scroll.y: 0
   }
 }
 

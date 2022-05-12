@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsitem.show.img" alt="">
+    <img :src="goodsitem.show.img" alt="" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsitem.title}}</p>
       <span class="price">{{goodsitem.price}}</span>
@@ -18,6 +18,12 @@ props:{
     default(){
       return {}
     }
+  }
+},
+methods:{
+  imgLoad(){
+    //事件总线,通过 vue 原型添加
+    this.$bus.$emit('itemImgLoad')
   }
 }
 }
