@@ -26,7 +26,6 @@ methods:{
     this.$bus.$emit('itemImgLoad')
   },
   itemClick(){
-    console.log('itemClick')
     this.$router.push('/detail/'+ this.goodsitem.iid)
   }
 }
