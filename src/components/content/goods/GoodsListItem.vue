@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <img :src="goodsitem.show.img" alt="" @load="imgLoad">
     <div class="goods-info">
       <p>{{goodsitem.title}}</p>
@@ -24,6 +24,10 @@ methods:{
   imgLoad(){
     //事件总线,通过 vue 原型添加
     this.$bus.$emit('itemImgLoad')
+  },
+  itemClick(){
+    console.log('itemClick')
+    this.$router.push('/detail/'+ this.goodsitem.iid)
   }
 }
 }

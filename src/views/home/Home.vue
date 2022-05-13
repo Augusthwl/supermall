@@ -150,7 +150,6 @@ export default {
       // 2、获取 tabControl 的 offsetTop 组件没有该属性，元素才有
       // 所有组件都有一个属性 $el:用于获取组件元素
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
-      console.log(this.tabOffsetTop)
     }
   }
 }
