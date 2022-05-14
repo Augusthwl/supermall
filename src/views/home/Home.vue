@@ -35,6 +35,7 @@ import BackTop from 'components/content/backTop/BackTop'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
 import { debounce } from 'common/utils'
+import {itemListenerMixin} from 'common/mixin'
 
 export default {
   name:"Home",
@@ -48,6 +49,7 @@ export default {
     Scroll,
     BackTop
 },
+mixins:[itemListenerMixin],
   data(){
     return {
       banners:[],
@@ -62,6 +64,7 @@ export default {
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY:0,
+      // itemImgListener:null
     }
   },
   computed:{
@@ -77,7 +80,10 @@ export default {
     this.$refs.scroll.refresh()
   },
   deactivated(){
+    //1.保存Y值
     this.saveY = this.$refs.scroll.getScrollY()
+    //2.取消全局事件的监听
+    this.$bus.$off(this.itemImgListener)
   },
   created(){
     //1.请求多个数据
@@ -89,13 +95,14 @@ export default {
     this.getHomeGoods('sell')
   },
   mounted(){
-    // 1、图片加载完成时间的监听
-    const refresh = debounce(this.$refs.scroll.refresh,500)//防抖监听
-    this.$bus.$on('itemImgLoad',()=>{//监听事件总线
-      refresh()
-    })
-    
+    // // 1、图片加载完成时间的监听
+    // let newRefresh = debounce(this.$refs.scroll.refresh,500)//防抖监听
+    // this.itemImgListener = ()=>{//监听事件总线
+    //   newRefresh()
+    // }
+    // this.$bus.$on('itemImgLoad',this.itemImgListener)
 
+    //提取到混入模式中
   },
   methods:{
     /**
