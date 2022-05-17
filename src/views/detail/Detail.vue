@@ -10,6 +10,9 @@
     <detail-comment-info :comment-info="commentInfo" ref="comment"/>
     <goods-list :goods="recommends" ref="recommend"/>
     </scroll>
+    <detail-bottom-bar @addCart="addToCart"/>
+    <back-top @click.native="backClick" v-show="isShow"/>
+    <!-- <toast :message="message" :show="show"  /> -->
   </div>
 </template>
 
@@ -21,13 +24,15 @@ import DetailShopInfo from './childComps/DetailShopInfo'
 import DetailGoodsInfo from './childComps/DetailGoodsInfo'
 import DetailParamInfo from './childComps/DetailParamInfo'
 import DetailCommentInfo from './childComps/DetailCommentInfo'
+import DetailBottomBar from './childComps/DetailBottomBar'
 
 import Scroll from 'components/common/scroll/Scroll'
 import GoodsList from 'components/content/goods/GoodsList'
+// import Toast from 'components/common/toast/Toast'
 
 import {getDetail, Goods, Shop, GoodsParam, getRecommend} from 'network/detail'
 import {debounce} from 'common/utils'
-import {itemListenerMixin} from 'common/mixin'
+import {itemListenerMixin, backTopMixin} from 'common/mixin'
 
 export default {
   name:"Detail",
@@ -40,9 +45,11 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     Scroll,
-    GoodsList
+    GoodsList,
+    DetailBottomBar,
+    // Toast
   },
-  mixins:[itemListenerMixin],
+  mixins:[itemListenerMixin, backTopMixin],
   data(){
       return{
           iid: null,
@@ -56,7 +63,9 @@ export default {
           // itemImgListener:null,
           themeTopYs:[],
           getThemeTopY:null,
-          currentIndex:0
+          currentIndex:0,
+          // message:'',
+          // show:false
 
       }
   },
@@ -125,7 +134,6 @@ export default {
     contentScroll(position){
       //1.获取y值
       const positionY = -position.y
-      
       //2.positionY 与主题中的值进行对比
       let length = this.themeTopYs.length
       for(let i = 0; i < length; i++ ){
@@ -134,6 +142,22 @@ export default {
           this.$refs.nav.currentIndex = this.currentIndex
         }
       }
+
+      //混入 mixin 回到顶部图标是否显示
+      // 判断 BackTop 是否显示
+      this.isShow = (-position.y) > 1000;
+    },
+    addToCart(){
+      //1.获取商品信息，添加到购物车中即可
+      const product = {}
+      product.image = this.topImgs[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.realPrice;
+      product.iid = this.iid;
+      this.$store.dispatch('addCart',product).then(res =>{//添加购物车成功
+        this.$toast.show(res,1000)
+      })
     }
   }
 }
@@ -150,7 +174,7 @@ export default {
   position:absolute;
   top: 44px;
   left: 0;
-  bottom:0;
+  bottom:58px;
 }
 .detail-nav{
   position:relative;

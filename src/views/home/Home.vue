@@ -142,6 +142,7 @@ mixins:[itemListenerMixin],
     backClick(){
       this.$refs.scroll.scrollTo(0,0)
     },
+    
     contentScroll(position){
       // 1.判断 BackTop 是否显示
       this.isShow = (-position.y) > 1000;

@@ -16,3 +16,20 @@ export const itemListenerMixin = {
       // console.log('来自混入中的 mounted()');
   }
 }
+
+import BackTop from '../components/content/backTop/BackTop'
+export const backTopMixin = {
+  data(){
+    return {
+      isShow:false
+    }
+  },
+  components:{
+    BackTop
+  },
+  methods:{
+    backClick(){
+      this.$refs.scroll.scrollTo(0,0,300)
+    }
+  }
+}
