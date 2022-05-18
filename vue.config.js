@@ -1,6 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
 })
 
 module.exports = {
@@ -15,5 +15,7 @@ module.exports = {
         'view':'@/view',
       }
     }
-  }
+  },
+  publicPath:"/supermall/",
+  outputDir: "dist", 
 }

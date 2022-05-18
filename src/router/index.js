@@ -38,7 +38,8 @@ const routes = [
   }
 ]
 const router = new Router({
-  routes: routes,
-  mode: 'history'
+  mode: 'history',
+  base:"/supermall/",
+  routes: routes
 })
 export default  router
